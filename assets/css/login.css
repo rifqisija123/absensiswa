@@ -1,0 +1,130 @@
+:root {
+  --default: #fff;
+  --bg: #181c54;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  font-family: "Poppins", sans-serif;
+}
+
+html {
+  font-size: 1.5rem;
+}
+
+body {
+  background-color: var(--bg);
+}
+
+.container-form {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(assets/img/kaiadmin/smkn9.png);
+}
+
+.container-form .form {
+  display: flex;
+  max-width: 70%;
+  max-height: 60vh;
+  background-color: var(--default);
+  border-radius: 1rem;
+  overflow: hidden;
+  justify-content: right;
+  align-items: center;
+  box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.3);
+}
+
+.container-form .form .form-img {
+  height: 100%;
+}
+
+.container-form .form .form-img img {
+  height: 31rem;
+}
+
+.container-form .form .form-login {
+  display: flex;
+  flex-direction: column;
+  margin: 3rem;
+  font-size: 1.4rem;
+}
+
+.container-form .form .form-login img {
+  width: 40px;
+  height: 40px;
+}
+
+.container-form .form .form-login h2 {
+  color: var(--bg);
+  margin-top: 0.6rem;
+}
+
+.container-form .form .form-login span {
+  color: rgb(255, 179, 0);
+}
+
+.container-form .form .form-login .form-input {
+  padding: 0.5rem 2rem;
+  margin: 0.5rem 1.5rem 0.5rem 0;
+  border: 1px solid #272727;
+  border-radius: 0.4rem;
+}
+
+.container-form .form .form-login .btn {
+  padding: 0.5rem 2rem;
+  margin: 0.5rem 1.5rem 0.5rem 0;
+  border: 1px solid #272727;
+  border-radius: 0.4rem;
+  background-color: rgb(4, 84, 255);
+  color: var(--default);
+}
+
+@media (max-width: 1366px) {
+  html {
+    font-size: 75%;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 62.5%;
+  }
+
+  .container-form .form {
+    display: block;
+    width: 50%;
+  }
+
+  .container-form .form .form-img {
+    width: 100%;
+  }
+
+  .container-form .form .form-img img {
+    display: none;
+  }
+
+  @media (max-width: 450px) {
+    html {
+      font-size: 55%;
+    }
+    .container-form .form {
+      width: 100vw;
+    }
+  }
+
+  @media (max-width: 375px) {
+    html {
+      font-size: 50%;
+    }
+    .container-form .form {
+      width: 100vw;
+    }
+  }
+}

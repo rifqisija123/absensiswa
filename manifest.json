@@ -1,0 +1,22 @@
+{
+    "name": "Si Hajar",
+    "short_name": "Meta Tech",
+    "description": "Absensi Siswa SMKN 9 Kota Bekasi by Meta Tech9",
+    "start_url": "/login.php",
+    "display": "standalone",
+    "theme_color": "#5f7995",
+    "background_color": "#5f7995",
+    "icons": [
+        {
+            "src": "assets/img/kaiadmin/smkn9.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "assets/img/kaiadmin/smkn9.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "prefer_related_applications": "true"
+}
