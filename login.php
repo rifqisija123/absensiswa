@@ -2,43 +2,54 @@
 require 'validasi.php';
 session_start();
 
-//cek login, sesuai atau tdiak dengan email dan password di database nya
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $role = $_POST['role']; // Dapatkan role dari input form
 
-    //validasi data
-    if (empty($email) || empty($password)) {
-        $_SESSION['login_error'] = "Email dan Password harus diisi.";
+    // Validasi input
+    if (empty($email) || empty($password) || empty($role)) {
+        $_SESSION['login_error'] = "Email, Password, dan Role harus diisi.";
         header("Location: login.php");
         exit();
     }
 
-    //pencocokan dengan database
-    $cekdatabase = mysqli_query($conn, "SELECT * FROM login where email='$email' and password='$password'");
-    //hitung jumlah data
+    // Pencocokan dengan database berdasarkan email, password, dan role
+    $cekdatabase = mysqli_query($conn, "SELECT * FROM users WHERE email='$email' AND password='$password' AND role='$role'");
+    $user = mysqli_fetch_assoc($cekdatabase);
     $hitung = mysqli_num_rows($cekdatabase);
 
-    if($hitung>0){
+    if ($hitung > 0) {
+        // Simpan data login ke session
         $_SESSION['log'] = 'True';
-        header('location:index.php');
+        $_SESSION['role'] = $user['role']; // Simpan role di session
+        
+        // Redirect sesuai dengan role
+        if ($user['role'] == 'admin') {
+            header('Location: index.php'); // Admin ke dashboard admin
+        } else {
+            header('Location: user.php'); // User ke dashboard user
+        }
     } else {
         echo '
         <script>
-            alert("Email dan Password anda salah, silahkan masukkan email dan password yang benar");
+            alert("Email, Password, atau Role anda salah. Pastikan email, password, dan role sesuai.");
             window.location.href="login.php";
         </script>
         ';
-    };
-};
+    }
+}
 
-if(!isset($_SESSION['log'])){
-    
-} else {
-    header('location:index.php');
-};
-
+if (isset($_SESSION['log'])) {
+    // Cek role, jika sudah login langsung ke halaman yang sesuai
+    if ($_SESSION['role'] == 'admin') {
+        header('Location: index.php');
+    } else {
+        header('Location: user.php');
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,8 +86,13 @@ if(!isset($_SESSION['log'])){
             <form method="post" class="form-login">
                 <img src="assets/img/kaiadmin/smkn9.png" alt="Logo SMKN 9 Kota Bekasi">
                 <h2>Login Si <span>Hajar</span></h2>
-                <input type="text" name="email" id="email" placeholder="Masukkan Email" class="form-input">
-                <input type="password" name="password" id="password" placeholder="Masukkan Password" class="form-input">
+                <input type="text" name="email" id="email" placeholder="Masukkan Email" class="form-control" required>
+                <input type="password" name="password" id="password" placeholder="Masukkan Password" class="form-control" required>
+                <select name="role" id="role" class="form-control" required>
+                    <option disabled selected>Pilih Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
                 <button class="btn" name="login">Login</button>
             </form>
         </div>
@@ -90,13 +106,13 @@ if(!isset($_SESSION['log'])){
         feather.replace();
     </script>
     <script href="assets/js/script.js"></script>
-    <script>
+    <!-- <script>
       window.addEventListener("load",()=>{
         if("serviceWorker" in navigator){
           navigator.serviceWorker.register("serviceworker.js")
         }
       })
-    </script>
+    </script> -->
 </body>
 
 </html>

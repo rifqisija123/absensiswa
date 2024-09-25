@@ -1,6 +1,12 @@
 <?php
+session_start();
 require './validasi.php';
-require 'tables/ceklogin.php';
+require 'pages_admin/ceklogin.php';
+
+if (!isset($_SESSION['log']) || $_SESSION['role'] != 'admin') {
+  header('Location: login.php'); // Akses dibatasi untuk admin
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +23,7 @@ require 'tables/ceklogin.php';
     href="assets/img/kaiadmin/smkn9.png"
     type="image/x-icon" />
   <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Fonts and icons -->
   <script src="assets/js/plugin/webfont/webfont.min.js"></script>
@@ -47,6 +54,19 @@ require 'tables/ceklogin.php';
 
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link rel="stylesheet" href="assets/css/demo.css" />
+
+  <style>
+    .role-title {
+      font-size: 14px;
+      color: darkgrey;
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -81,6 +101,10 @@ require 'tables/ceklogin.php';
       <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
           <ul class="nav nav-secondary">
+            <div class="container mt-4">
+              <p class="role-title mb-0">Absensi Siswa</p>
+              <p class="role-title mt-0">Role: Admin</p>
+            </div>
             <li class="nav-item active">
               <a
                 data-bs-toggle="collapse"
@@ -106,50 +130,20 @@ require 'tables/ceklogin.php';
               <div class="collapse" id="base">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="tables/data-sija.php">
+                    <a href="pages_admin/data-sija.php">
                       <span class="sub-item">Data SIJA</span>
                     </a>
                   </li>
                   <li>
-                    <a href="tables/data-absen-sija.php">
+                    <a href="pages_admin/data-absen-sija.php">
                       <span class="sub-item">Rekap Absen SIJA</span>
                     </a>
                   </li>
                   <li>
-                    <a href="tables/log-sija.php">
+                    <a href="pages_admin/log-sija.php">
                       <span class="sub-item">Log SIJA</span>
                     </a>
                   </li>
-                  <!-- <li>
-                      <a href="components/panels.html">
-                        <span class="sub-item">Panels</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="components/notifications.html">
-                        <span class="sub-item">Notifications</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="components/sweetalert.html">
-                        <span class="sub-item">Sweet Alert</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="components/font-awesome-icons.html">
-                        <span class="sub-item">Font Awesome Icons</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="components/simple-line-icons.html">
-                        <span class="sub-item">Simple Line Icons</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="components/typography.html">
-                        <span class="sub-item">Typography</span>
-                      </a>
-                    </li> -->
                 </ul>
               </div>
             </li>
@@ -162,17 +156,17 @@ require 'tables/ceklogin.php';
               <div class="collapse" id="sidebarLayouts">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="tables/data-dkv.php">
+                    <a href="pages_admin/data-dkv.php">
                       <span class="sub-item">Data DKV</span>
                     </a>
                   </li>
                   <li>
-                    <a href="icon-menu.html">
+                    <a href="pages_admin/data-absen-dkv.php">
                       <span class="sub-item">Rekap Absen DKV</span>
                     </a>
                   </li>
                   <li>
-                    <a href="icon-menu.html">
+                    <a href="pages_admin/log.dkv.php">
                       <span class="sub-item">Log DKV</span>
                     </a>
                   </li>
@@ -188,156 +182,31 @@ require 'tables/ceklogin.php';
               <div class="collapse" id="forms">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="tables/data-lpb.html">
+                    <a href="pages_admin/data-lpb.php">
                       <span class="sub-item">Data LPB</span>
                     </a>
                   </li>
                   <li>
-                    <a href="forms/forms.html">
+                    <a href="pages_admin/data-absen-lpb.php">
                       <span class="sub-item">Rekap Absen LPB</span>
                     </a>
                   </li>
                   <li>
-                    <a href="forms/forms.html">
+                    <a href="pages_admin/log-lpb.php">
                       <span class="sub-item">Log LPB</span>
                     </a>
                   </li>
                 </ul>
               </div>
-            <li>
+              <a class="nav-link" href="pages_admin/user-management.php">
+                <i class="fa fa-users"></i>
+                <p>User Management</p>
+              </a>
               <a class="nav-link" href="logout.php">
-                Logout
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <p>Logout</p>
               </a>
             </li>
-            </li>
-            <!-- <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables">
-                  <i class="fas fa-table"></i>
-                  <p>Tables</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="tables">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="tables/tables.html">
-                        <span class="sub-item">Basic Table</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="tables/datatables.html">
-                        <span class="sub-item">Datatables</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li> -->
-            <!-- <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#maps">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <p>Maps</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="maps">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="maps/googlemaps.html">
-                        <span class="sub-item">Google Maps</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="maps/jsvectormap.html">
-                        <span class="sub-item">Jsvectormap</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li> -->
-            <!-- <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#charts">
-                  <i class="far fa-chart-bar"></i>
-                  <p>Charts</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="charts">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="charts/charts.html">
-                        <span class="sub-item">Chart Js</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="charts/sparkline.html">
-                        <span class="sub-item">Sparkline</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li> -->
-            <!-- <li class="nav-item">
-                <a href="widgets.html">
-                  <i class="fas fa-desktop"></i>
-                  <p>Widgets</p>
-                  <span class="badge badge-success">4</span>
-                </a>
-              </li> -->
-            <!-- <li class="nav-item">
-                <a href="../../documentation/index.html">
-                  <i class="fas fa-file"></i>
-                  <p>Documentation</p>
-                  <span class="badge badge-secondary">1</span>
-                </a>
-              </li> -->
-            <!-- <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#submenu">
-                  <i class="fas fa-bars"></i>
-                  <p>Menu Levels</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="submenu">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a data-bs-toggle="collapse" href="#subnav1">
-                        <span class="sub-item">Level 1</span>
-                        <span class="caret"></span>
-                      </a>
-                      <div class="collapse" id="subnav1">
-                        <ul class="nav nav-collapse subnav">
-                          <li>
-                            <a href="#">
-                              <span class="sub-item">Level 2</span>
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <span class="sub-item">Level 2</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li>
-                      <a data-bs-toggle="collapse" href="#subnav2">
-                        <span class="sub-item">Level 1</span>
-                        <span class="caret"></span>
-                      </a>
-                      <div class="collapse" id="subnav2">
-                        <ul class="nav nav-collapse subnav">
-                          <li>
-                            <a href="#">
-                              <span class="sub-item">Level 2</span>
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <span class="sub-item">Level 1</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li> -->
           </ul>
         </div>
       </div>
@@ -347,7 +216,6 @@ require 'tables/ceklogin.php';
     <div class="main-panel">
       <div class="main-header">
         <div class="main-header-logo">
-          <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
             <a href="index.php" class="logo">
               <img
@@ -368,113 +236,7 @@ require 'tables/ceklogin.php';
               <i class="gg-more-vertical-alt"></i>
             </button>
           </div>
-          <!-- End Logo Header -->
         </div>
-        <!-- Navbar Header -->
-        <!-- <nav
-            class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
-            <div class="container-fluid">
-              <nav
-                class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex"
-              >
-            </nav>
-              <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                <li
-                  class="nav-item topbar-icon dropdown hidden-caret d-flex d-lg-none"
-                >
-                  <a
-                    class="nav-link dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    role="button"
-                    aria-expanded="false"
-                    aria-haspopup="true"
-                  >
-                    <i class="fa fa-search"></i>
-                  </a>
-                  <ul class="dropdown-menu dropdown-search animated fadeIn">
-                    <form class="navbar-left navbar-form nav-search">
-                      <div class="input-group">
-                        <input
-                          type="text"
-                          placeholder="Search ..."
-                          class="form-control"
-                        />
-                      </div>
-                    </form>
-                  </ul>
-                </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="messageDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-envelope"></i>
-                  </a>
-                </li>
-                <li class="nav-item topbar-icon dropdown hidden-caret">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="notifDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-bell"></i>
-                    <span class="notification">1</span>
-                  </a>
-                  <ul
-                    class="dropdown-menu notif-box animated fadeIn"
-                    aria-labelledby="notifDropdown"
-                  >
-                    <li>
-                      <div class="dropdown-title">
-                        Web memiliki 1 notifikasi baru
-                      </div>
-                    </li>
-                    <li>
-                      <div class="notif-scroll scrollbar-outer">
-                        <div class="notif-center">
-                          <a href="#">
-                            <div class="notif-icon notif-primary">
-                              <i class="fa fa-school"></i>
-                            </div>
-                            <div class="notif-content">
-                              <span class="block"> Absen PB,DKV,SIJA </span>
-                              <span class="time">5 minutes ago</span>
-                            </div>
-                          </a>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <a class="see-all" href="javascript:void(0);"
-                        >lihat semua notifikasi<i class="fa fa-angle-right"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
-
-                <li class="nav-item topbar-user dropdown hidden-caret">
-                  <a
-                    class="dropdown-toggle profile-pic"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    aria-expanded="false"
-                  >
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </nav> -->
-        <!-- End Navbar -->
       </div>
 
       <div class="container">
@@ -579,6 +341,7 @@ require 'tables/ceklogin.php';
     </div>
     <!-- End Custom template -->
   </div>
+
   <!--   Core JS Files   -->
   <script src="assets/js/core/jquery-3.7.1.min.js"></script>
   <script src="assets/js/core/popper.min.js"></script>
@@ -643,12 +406,13 @@ require 'tables/ceklogin.php';
       fillColor: "rgba(255, 165, 52, .14)",
     });
   </script>
-  <script>
-      window.addEventListener("load",()=>{
-        if("serviceWorker" in navigator){
-          navigator.serviceWorker.register("serviceworker.js")
-        }
-      })
-  </script>
+  <!-- <script>
+    window.addEventListener("load", () => {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("serviceworker.js")
+      }
+    })
+  </script> -->
 </body>
+
 </html>

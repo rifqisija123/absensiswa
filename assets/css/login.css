@@ -70,7 +70,7 @@ body {
   color: rgb(255, 179, 0);
 }
 
-.container-form .form .form-login .form-input {
+.container-form .form .form-login .form-control{
   padding: 0.5rem 2rem;
   margin: 0.5rem 1.5rem 0.5rem 0;
   border: 1px solid #272727;
